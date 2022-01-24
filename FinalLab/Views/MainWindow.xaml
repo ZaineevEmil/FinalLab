@@ -1,0 +1,78 @@
+﻿<Window x:Class="FinalLab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinalLab"
+        xmlns:vm="clr-namespace:FinalLab.ViewModels"
+        mc:Ignorable="d"
+        Title="Калькулятор" Height="650" Width="500" BorderBrush="#FFCBCBCB" MinHeight="600" MinWidth="400">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <!--Задаем ресурс стиля общие для всех кнопок--> 
+        <Style x:Key="ButtonStyle">
+            <Setter Property="Button.Background" Value="#FFBBBBBB"/>
+            <Setter Property="Button.BorderBrush" Value="#FF535353"/>
+            <Setter Property="Button.Foreground" Value="#FFAA3131"/>
+            <Setter Property="Button.FontSize" Value="32"/>
+            <Setter Property="Button.BorderThickness" Value="2"/>
+            <Setter Property="Button.FontFamily" Value="Comic Sans MS"/>
+        </Style>
+        
+        <!--Задаем ресурс стиля общие для всех кнопок, которыми вводим цифры с использованием ресурса общего для всех кнопок-->
+        <Style x:Key="NumberButtonStyle" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Button.Background" Value="#FFF1F1F1"/>
+            <Setter Property="Button.Foreground" Value="#FFB46506"/>
+            <Setter Property="Button.FontSize" Value="36"/>
+        </Style>
+    </Window.Resources>
+
+    <!--Создаем компоновку будущего калькулятора--> 
+    <Grid Background="Black">
+
+        <!--Определяем 2 основные области: область вывода текста и область фунциональных кнопок -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Задаем дизайн области вывода текста -->
+        <Grid Grid.Row="0">
+            <Border BorderBrush="#FFF1F1F1" BorderThickness="5">
+                <Border BorderBrush="#FF535353" BorderThickness="5">
+                    <TextBlock Text="{Binding Path=Display, Mode=TwoWay}" HorizontalAlignment="Right" Padding="18" VerticalAlignment="Center" FontSize="60" Foreground="#FFBFBCBC">0</TextBlock>
+                </Border>
+            </Border>
+        </Grid>
+
+        <!--Задаем дизайн и содержание области фунциональных кнопок с использованием созданных ресурсов стиля. В случае необходимости изменяем дизайн определенных кнопок -->
+        <Grid Grid.Row="1">
+            <UniformGrid Rows="5" Columns="4">
+                <Button  Content="CE" Style="{StaticResource ButtonStyle}"  Command="{Binding Path=DeleteNumber}"/>
+                <Button  Content="C" Style="{StaticResource ButtonStyle}" Command="{Binding Path=DeleteAll}"/>
+                <Button  Content="←" Style="{StaticResource ButtonStyle}" Command="{Binding Path=DeleteLastNumber}"/>
+                <Button  Content="/" Style="{StaticResource ButtonStyle}" Command="{Binding Path=AddOperation}" CommandParameter="/"/>
+                <Button  Content="7" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="7"/>
+                <Button  Content="8" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="8"/>
+                <Button  Content="9" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="9"/>
+                <Button  Content="×" Style="{StaticResource ButtonStyle}" Command="{Binding Path=AddOperation}" CommandParameter="×"/>
+                <Button  Content="4" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="4"/>
+                <Button  Content="5" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="5"/>
+                <Button  Content="6" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="6"/>
+                <Button  Content="-" Style="{StaticResource ButtonStyle}" Command="{Binding Path=AddOperation}" CommandParameter="-"/>
+                <Button  Content="1" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="1"/>
+                <Button  Content="2" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="2"/>
+                <Button  Content="3" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="3"/>
+                <Button  Content="+" Style="{StaticResource ButtonStyle}" Command="{Binding Path=AddOperation}" CommandParameter="+"/>
+                <Button  Content="+/-" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddPlusMinus}"/>
+                <Button  Content="0" Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter="0"/>
+                <Button  Content="," Style="{StaticResource NumberButtonStyle}" Command="{Binding Path=AddNumber}" CommandParameter=","/>
+                <Button  Content="=" Style="{StaticResource ButtonStyle}" Background="Orange" Command="{Binding Path=AddResult}"/>
+            </UniformGrid>
+        </Grid>
+    </Grid>
+</Window>
